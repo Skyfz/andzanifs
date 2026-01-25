@@ -64,9 +64,28 @@
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <button class="text-slate-900">
+                    <button id="mobile-menu-btn" class="text-slate-900 focus:outline-none">
                         <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 absolute w-full left-0 top-16 shadow-xl transition-all duration-300">
+            <div class="px-6 py-8 space-y-6 flex flex-col">
+                <a href="#about" class="text-lg font-medium text-slate-600 hover:text-blue-900 transition-colors">About
+                    Us</a>
+                <a href="#plans"
+                    class="text-lg font-medium text-slate-600 hover:text-blue-900 transition-colors">Funeral Plans</a>
+                <a href="#partners"
+                    class="text-lg font-medium text-slate-600 hover:text-blue-900 transition-colors">Partners</a>
+                <div class="pt-4 border-t border-slate-100">
+                    <a href="#contact"
+                        class="block w-full text-center bg-blue-900 hover:bg-blue-800 text-white text-base font-medium px-4 py-3 rounded-xl transition-all shadow-lg shadow-blue-900/20">
+                        Get a Quote
+                    </a>
                 </div>
             </div>
         </div>
@@ -179,28 +198,37 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-4 mt-8">
-                        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                            <iconify-icon icon="solar:heart-linear" class="text-blue-600 mb-3"
+                        <div
+                            class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md active:scale-95 group">
+                            <iconify-icon icon="solar:heart-linear"
+                                class="text-blue-600 mb-3 group-hover:text-blue-700 transition-colors"
                                 width="32"></iconify-icon>
                             <h3 class="font-medium text-slate-900">Empathetic</h3>
                             <p class="text-xs text-slate-500 mt-1">We treat every client like family.</p>
                         </div>
-                        <div class="bg-blue-900 p-6 rounded-2xl shadow-lg text-white">
-                            <iconify-icon icon="solar:hand-shake-linear" class="text-blue-200 mb-3"
+                        <div
+                            class="bg-blue-900 p-6 rounded-2xl shadow-lg text-white cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-900/30 active:scale-95 group">
+                            <iconify-icon icon="solar:hand-shake-linear"
+                                class="text-blue-200 mb-3 group-hover:text-white transition-colors"
                                 width="32"></iconify-icon>
                             <h3 class="font-medium">Local</h3>
-                            <p class="text-xs text-blue-200 mt-1">Proudly serving the Benoni community.</p>
+                            <p class="text-xs text-blue-200 mt-1 group-hover:text-blue-100">Proudly serving the Benoni
+                                community.</p>
                         </div>
                     </div>
                     <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                            <iconify-icon icon="solar:file-check-linear" class="text-blue-600 mb-3"
+                        <div
+                            class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md active:scale-95 group">
+                            <iconify-icon icon="solar:file-check-linear"
+                                class="text-blue-600 mb-3 group-hover:text-blue-700 transition-colors"
                                 width="32"></iconify-icon>
                             <h3 class="font-medium text-slate-900">Transparent</h3>
                             <p class="text-xs text-slate-500 mt-1">No hidden costs. Ever.</p>
                         </div>
-                        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                            <iconify-icon icon="solar:clock-circle-linear" class="text-blue-600 mb-3"
+                        <div
+                            class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md active:scale-95 group">
+                            <iconify-icon icon="solar:clock-circle-linear"
+                                class="text-blue-600 mb-3 group-hover:text-blue-700 transition-colors"
                                 width="32"></iconify-icon>
                             <h3 class="font-medium text-slate-900">Fast</h3>
                             <p class="text-xs text-slate-500 mt-1">Quick claim processing.</p>
@@ -498,6 +526,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Logic
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuLinks = mobileMenu.querySelectorAll('a');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = menuBtn.querySelector('iconify-icon');
+                    // Toggle icon between hamburger and close
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.setAttribute('icon', 'solar:hamburger-menu-linear');
+                    } else {
+                        icon.setAttribute('icon', 'solar:close-circle-linear');
+                    }
+                });
+
+                // Close menu when a link is clicked
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        const icon = menuBtn.querySelector('iconify-icon');
+                        icon.setAttribute('icon', 'solar:hamburger-menu-linear');
+                    });
+                });
+            }
+
             const form = document.getElementById('contact-form');
             const submitBtn = form.querySelector('button');
             const originalBtnText = submitBtn.innerHTML;
